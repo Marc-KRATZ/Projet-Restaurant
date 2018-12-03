@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <script src="lib/lodash.min.js"></script>
+
+    <title>Projet Restaurant</title>
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="md-app-content">
+
+      <div class="md-layout">
+          <div class="md-layout-item">
+            <form novalidate id="form1" form="form1" class="md-layout" v-on:submit="ajouterRestaurant">
+          
+        
+            <md-card class="md-layout-item">
+
+              <md-card-header>
+                  <div class="md-title">Ajouter un Restaurant</div>
+                </md-card-header>
+
+
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item">
+                          <md-field >
+                            <label id="nom" for="nom">Nom</label>
+                            <md-input form="form1" name="nom" v-model="nom" id="nom"/>
+                          </md-field>
+                        </div>
+                    </div>
+                </md-card-content>
+                <md-card-content>
+                  <div class="md-layout md-gutter">
+                      <div class="md-layout-item">
+                          <md-field >
+                            <label id="cuisine" for="cuisine">Cuisine</label>
+                            <md-input form="form1" name="cuisine" v-model="cuisine" id="cuisine"/>
+                          </md-field>
+                        </div>
+                  </div>
+                </md-card-content>
+          
+
+            <md-card-actions>
+                <md-button type="submit" form="form1" class="md-primary" >Ajouter</md-button>
+            </md-card-actions>
+          </md-card>
+        </form>
+          </div>
+
+          <div class="md-layout-item md-layout">
+              <div class="md-layout-item">
+                  <form novalidate id="form2" form="form2" class="md-layout" v-on:submit="modifierRestaurant">
+                
+              
+                  <md-card class="md-layout-item">
+      
+                    <md-card-header>
+                        <div class="md-title">Modifier un Restaurant</div>
+                      </md-card-header>
+      
+                      <md-card-content>
+                          <div class="md-layout md-gutter">
+                              <div class="md-layout-item">
+                                <md-field >
+                                  <label id="id" for="id">Id</label>
+                                  <md-input form="id" name="id" v-model="id" id="id"/>
+                                </md-field>
+                              </div>
+                          </div>
+                      </md-card-content>
+      
+                      <md-card-content>
+                          <div class="md-layout md-gutter">
+                              <div class="md-layout-item">
+                                <md-field >
+                                  <label id="nom" for="nom">Nom</label>
+                                  <md-input form="form1" name="nom" v-model="nom2" id="nom"/>
+                                </md-field>
+                              </div>
+                          </div>
+                      </md-card-content>
+                      <md-card-content>
+                        <div class="md-layout md-gutter">
+                            <div class="md-layout-item">
+                                <md-field >
+                                  <label id="cuisine" for="cuisine">Cuisine</label>
+                                  <md-input form="form1" name="cuisine" v-model="cuisine2" id="cuisine"/>
+                                </md-field>
+                              </div>
+                        </div>
+                      </md-card-content>
+                
+      
+                  <md-card-actions>
+                      <md-button type="submit" form="form2" class="md-primary" >Modifier</md-button>
+                  </md-card-actions>
+                </md-card>
+              </form>
+                </div>
+          </div>
+      </div>
+        <br>
+        
+
+        <md-toolbar>
+                            <div class="md-toolbar-section-start">
+                              <h1 class="md-title">Liste des Restaurants</h1>
+                            </div>
+                    
+                            <md-field md-clearable class="md-toolbar-section-end">
+                              <md-input placeholder="Search by name..." v-model="name" @input="chercherRestaurants" />
+                            </md-field>
+                          </md-toolbar>
+	
+
+                <md-table md-card>
+
+                    
+
+      
+          
+                <md-table-row>
+                  <md-table-head>Supprimer</md-table-head>
+                  <md-table-head>Modifier</md-table-head>
+                  <md-table-head>Id</md-table-head>
+                  <md-table-head>Nom</md-table-head>
+                  <md-table-head>cuisine</md-table-head>
+                </md-table-row>
+          
+                <md-table-row v-for="r,index in restaurants"  v-bind:style="{backgroundColor:getColor(index)}">
+                  <md-table-cell><md-button class="md-icon-button md-raised md-accent" v-on:click="supprimerRestaurant(r._id)"><md-icon>delete</md-icon></md-button>
+                   
+                    
+                    
+
+                    </md-table-cell>
+                    
+                  <md-table-cell>
+                      <md-dialog :md-active.sync="showDialog">
+                          <md-dialog-title>Preferences {{r._id}}</md-dialog-title>
+
+
+                    
+                          <md-tabs md-dynamic-height>
+                            <md-tab md-label="General">
+                              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
+                              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
+                              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
+                            </md-tab>
+                          </md-tabs>
+                    
+                          <md-dialog-actions>
+                            <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+                            <md-button class="md-primary" @click="showDialog = false">Save</md-button>
+                          </md-dialog-actions>
+                        </md-dialog>
+                    
+                        <md-button class="md-icon-button md-raised" @click="showDialog = true"><md-icon>edit</md-icon></md-button>
+                      
+                  </md-table-cell>
+
+
+
+
+
+
+                    
+                  
+                  <md-table-cell>{{r._id}}</md-table-cell>
+                  <md-table-cell>{{r.name}}</md-table-cell>
+                  <md-table-cell>{{r.cuisine}}</md-table-cell>
+                </md-table-row>
+                
+                    
+                   
+                
+              </md-table> 
+              <md-toolbar>
+                  <h3 class="md-title" style="flex: 1">Navigation</h3>
+
+                        <md-button class="md-icon-button" v-on:click="Premierepage">
+                            <md-icon>first_page</md-icon>
+                        </md-button>
+                          <md-button class="md-icon-button" v-on:click="pagePrecedente">
+                              <md-icon>navigate_before</md-icon>
+                          </md-button>
+
+                          <md-button class="md-primary" disabled>
+                            Page : {{page + 1}} / {{ pageMax()+1 }}
+                          </md-button>
+
+                            <md-button class="md-icon-button" v-on:click="pageSuivante">
+                                <md-icon>navigate_next</md-icon>
+                            </md-button>
+                              <md-button class="md-icon-button" v-on:click="Dernierepage">
+                                  <md-icon>last_page</md-icon>
+                              </md-button>
+            </md-toolbar>
+
+          
+            
+        
+            
+        
+
+		
+    </div>  
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
+    <script src="js/script.js"></script></script>
+  </body>
+</html>
